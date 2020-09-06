@@ -35,7 +35,7 @@
 }
 
 body{
-  background-color: salmon;
+  background-color: #fff;
 }
 
 .btn_container + .btn_container {
@@ -44,5 +44,9 @@ body{
 
 .solid:hover, .gradient:hover {
   cursor: pointer;
+  box-shadow: 0 0 0 3px #fff;
+}
+
+.gradient_shadow:hover, .solid_shadow:hover{
   box-shadow: 0 0 0 3px #fff;
 }
