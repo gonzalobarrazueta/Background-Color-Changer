@@ -6,6 +6,14 @@
   font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
 }
 
+html {
+  height: 100vh;
+}
+
+body{
+  background-color:#fff;
+}
+
 #btns_container{
   display: flex;
   margin: 40vh 0;
@@ -32,10 +40,6 @@
   z-index: -1;
   left: 10px;
   top: 10px;
-}
-
-body{
-  background-color: #fff;
 }
 
 .btn_container + .btn_container {
