@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Roboto, Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/*.shadow {
+  margin :10px;
+  box-shadow: 0 0 0 1px red;
+}
+         
+.shadow:hover {
+  box-shadow: 0 0 0 3px red;
+}*/
+
+#btns_container{
+  display: flex;
+  border: 1px solid #000;
+  margin: 40vh 0;
+  justify-content: center;
+}
+
+.btn_container{
+  position: relative;
+}
+
+#btn_solidColor, #btn_solidColor_shadow,
+#btn_gradientColor, #btn_gradientColor_shadow{
+  max-width: 300px;
+  background-color: #fff;
+  border: 2px solid #000;
+  font-size: 1rem;
+  padding: 1.5em 2em;
+  border-radius: 20px;
+}
+
+#btn_solidColor_shadow, #btn_gradientColor_shadow{
+  background: rgba(255, 255, 255, 0);
+  position: absolute;
+  z-index: -1;
+  left: 10px;
+  top: 10px;
+}
+
+body{
+  background-color: salmon;
+}
+
+.btn_container + .btn_container {
+  margin-left: 70px;
+}
