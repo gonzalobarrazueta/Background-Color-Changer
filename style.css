@@ -26,8 +26,7 @@
   position: relative;
 }
 
-#btn_solidColor, #btn_solidColor_shadow,
-#btn_gradientColor, #btn_gradientColor_shadow{
+.btn{
   max-width: 300px;
   background-color: #fff;
   border: 2px solid #000;
@@ -36,7 +35,7 @@
   border-radius: 20px;
 }
 
-#btn_solidColor_shadow, #btn_gradientColor_shadow{
+.solid_shadow, .gradient_shadow{
   background: rgba(255, 255, 255, 0);
   position: absolute;
   z-index: -1;
