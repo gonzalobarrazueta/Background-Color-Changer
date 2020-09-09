@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
 *{
   margin: 0;
   padding: 0;
@@ -16,8 +17,14 @@ body{
 
 #btns_container{
   display: flex;
-  margin: 40vh 0;
-  justify-content: center;
+  flex-flow: column nowrap;
+  align-items: center;
+  margin: 25vh 0;
+}
+
+#hexCode{
+  margin: 10px 0 15px 0;
+  font-size:1.5rem;
 }
 
 .btn_container{
@@ -34,7 +41,9 @@ body{
   border-radius: 20px;
 }
 
-.solid_shadow, .gradient_shadow{
+.solid_shadow, 
+.gradient_shadow, 
+.hex_shadow {
   background: rgba(255, 255, 255, 0);
   position: absolute;
   z-index: -1;
@@ -43,10 +52,12 @@ body{
 }
 
 .btn_container + .btn_container {
-  margin-left: 70px;
+  margin-top : 50px;
 }
 
-.solid:hover, .gradient:hover {
+.solid:hover, 
+.gradient:hover, 
+.hex:hover { 
   cursor: pointer;
   box-shadow: 0 0 0 3px #fff;
 }
