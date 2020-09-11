@@ -10,7 +10,14 @@ solid_btn.onclick = setSolidColor;
 gradient_btn.onclick = setGradientColor;
 hex_btn.onclick = showHexCode;
 
+// checks which btn was selected 
+let solidBtnSelected = false;
+let gradientBtnSelected = false;
+
 function setSolidColor() {
+
+  solidBtnSelected = true;
+  gradientBtnSelected = false;
     
   let red = Math.ceil(Math.random()*255);
   let green = Math.ceil(Math.random()*255);
@@ -21,6 +28,9 @@ function setSolidColor() {
 
 function setGradientColor() {
   
+  gradientBtnSelected = true;
+  solidBtnSelected = false;
+
   let red = Math.ceil(Math.random()*255);
   let green = Math.ceil(Math.random()*255);
   let blue = Math.ceil(Math.random()*255); 
@@ -44,7 +54,7 @@ function getRGBvalues() {
   let bgColor = document.querySelector('body').style.backgroundColor;
 
   let rgbStart = bgColor.indexOf('(') + 1;
-  let rgbEnd = bgColor.indexOf(')');
+  let rgbEnd = bgColor.lastIndexOf(')');
 
   let colorValues = bgColor.slice(rgbStart, rgbEnd);
 
@@ -123,7 +133,9 @@ function orderHexCode(){
 
 function showHexCode(){
 
-  let code = orderHexCode().join('');
-  let para = document.querySelector('#hexCode');
-  para.innerHTML = '#' + code;
+  if(solidBtnSelected){
+    let code = orderHexCode().join('');
+    let para = document.querySelector('#hexCode');
+    para.innerHTML = '#' + code;
+  }
 }
