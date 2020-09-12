@@ -48,19 +48,52 @@ function setGradientColor() {
   'rgb(' + red2 + ',' + green2 + ',' + blue2 + ')';
 }
 
-//returns the array of the 3 RGB color values of the body html tag
+//checks which btn was selected (solid or gradient) and calls the respective function
 function getRGBvalues() {
 
-  let bgColor = document.querySelector('body').style.backgroundColor;
+  // selects the inline background-color attribute from the html
+  let backgroundColor = background.style.background;
 
-  let rgbStart = bgColor.indexOf('(') + 1;
-  let rgbEnd = bgColor.lastIndexOf(')');
+  if (solidBtnSelected) {
+    return getSolidRGBvalues(backgroundColor);
+  }
+  else {
+    return getGradientRGBvalues(backgroundColor);
+  }
+}
+ 
+//returns the array of the 3 RGB color values of the body html tag
+function getSolidRGBvalues(bgColor){
 
-  let colorValues = bgColor.slice(rgbStart, rgbEnd);
+  let start = bgColor.indexOf('(') + 1;
+  let end = bgColor.lastIndexOf(')');
 
-  let rgbColorValues = colorValues.split(',');
+  bgColor = bgColor.slice(start,end);
 
-  return rgbColorValues;
+  bgColor = bgColor.split(',');
+
+  return bgColor;
+} 
+
+/*  returns an array of 2 arrays (each array has the 3 rgb values of its color  */
+function getGradientRGBvalues(bgColor){
+
+  let start = bgColor.indexOf('rgb');
+  let end = bgColor.lastIndexOf(')');
+
+  bgColor = bgColor.slice(start,end);
+
+  let colorsArray = [];
+  
+  start = bgColor.lastIndexOf('rgb');
+  colorsArray.unshift( bgColor.slice(start));
+  colorsArray.unshift(bgColor.slice(0, start-2));
+
+  for (let i = 0; i < 2; i++){
+    colorsArray[i] = getSolidRGBvalues(colorsArray[i]);
+  }
+
+  return colorsArray;
 }
 
 //return an array of the RGB color values convert to base 16
@@ -71,12 +104,12 @@ function convertToHex(){
   
   let quotient;
   
-  for (let i = 0; i< 3; i++){
+  for (let i = 0; i < values.length; i++){
     
     quotient = Number(values[i]);
 
     while(quotient != 0){
-      
+
       remainders.push(quotient%16);
       quotient = Math.floor(quotient / 16);   
     }
@@ -133,9 +166,12 @@ function orderHexCode(){
 
 function showHexCode(){
 
+  let para = document.querySelector('#hexCode');
+
   if(solidBtnSelected){
     let code = orderHexCode().join('');
-    let para = document.querySelector('#hexCode');
     para.innerHTML = '#' + code;
+  } else {
+
   }
 }
