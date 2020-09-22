@@ -48,20 +48,6 @@ function setGradientColor() {
   'rgb(' + red2 + ',' + green2 + ',' + blue2 + ')';
 }
 
-//checks which btn was selected (solid or gradient) and calls the respective function
-function getRGBvalues() {
-
-  // selects the inline background-color attribute from the html
-  let backgroundColor = background.style.background;
-
-  if (solidBtnSelected) {
-    return getSolidRGBvalues(backgroundColor);
-  }
-  else {
-    return getGradientRGBvalues(backgroundColor);
-  }
-}
- 
 //returns the array of the 3 RGB color values of the body html tag
 function getSolidRGBvalues(bgColor){
 
@@ -75,7 +61,7 @@ function getSolidRGBvalues(bgColor){
   return bgColor;
 } 
 
-/*  returns an array of 2 arrays (each array has the 3 rgb values of its color  */
+/*  returns an (multidimensional) array of 2 arrays (each array has the 3 rgb values of its color  */
 function getGradientRGBvalues(bgColor){
 
   let start = bgColor.indexOf('rgb');
@@ -96,34 +82,99 @@ function getGradientRGBvalues(bgColor){
   return colorsArray;
 }
 
-//return an array of the RGB color values convert to base 16
-function convertToHex(){
-  
-  let values = getRGBvalues();
+//checks which btn was selected (solid or gradient) and calls the respective function
+function getRGBvalues() {
+
+  // selects the inline background-color attribute from the html
+  let backgroundColor = background.style.background;
+
+  if (solidBtnSelected) {
+    return getSolidRGBvalues(backgroundColor);
+  }
+  else {
+    return getGradientRGBvalues(backgroundColor);
+  }
+}
+
+//conniverte los valores a hexadecimal para los gradientes
+function convertGradients(values){
+
   let remainders = [];
-  
+  let quotient;
+
+  for (let i = 0; i < values.length; i++){
+    
+    for (let j = 0; j < values[i].length; j++){
+      quotient = Number(values[i][j]);
+
+      while(quotient !== 0){
+
+        remainders.push(quotient%16);
+        quotient = Math.floor(quotient/16);
+
+        // cuando un valor rgb es de 1 cifra, se le agrega un 0 al final
+        if (values[i] < 10) { 
+          remainders.push(0);
+        }
+      }
+    }
+  }
+
+  remainders = convertToLetterValues(remainders);
+
+  //devuelve un array de 6 números (3 valores por cada color) en base 16
+  return remainders;
+}
+
+function convertSolidColors(values){
+
+  let remainders = [];
   let quotient;
   
   for (let i = 0; i < values.length; i++){
     
     quotient = Number(values[i]);
 
-    while(quotient != 0){
+    while(quotient !== 0){
 
       remainders.push(quotient%16);
       quotient = Math.floor(quotient / 16);   
+
+      // cuando un valor rgb es de 1 cifra, se le agrega un 0 al final
+      if (values[i] < 10) { 
+        remainders.push(0);
+      }
     }
   }
 
-  //converts the numbers to letters where necessary
-  for (let i = 0; i < remainders.length; i++){
-
-    if (remainders[i] >= 10){
-      remainders[i] = checkHexLetterValues(remainders[i]);
-    }
-  }
+  remainders = convertToLetterValues(remainders);
 
   return remainders;
+}
+
+//return an array of the RGB color values convert to base 16
+function convertToHex(){
+  
+  let values = getRGBvalues();
+
+  if  (solidBtnSelected)  {
+    return convertSolidColors(values);
+  } 
+  else  {
+    return convertGradients(values);
+  }
+}
+
+//checks the number values and converts to letters if necessary
+function convertToLetterValues(values){
+
+  for (let i = 0; i < values.length; i++){
+
+    if (values[i] >= 10){
+      values[i] = checkHexLetterValues(values[i]);
+    }
+  }
+  return values;
 }
 
 function checkHexLetterValues(value){
@@ -155,7 +206,7 @@ function orderHexCode(){
   let code = convertToHex();
   let temp;
 
-  for (let index = 0; index <= 4; index +=2){
+  for (let index = 0; index <= code.length - 2; index +=2){
 
     temp = code[index];
     code[index] = code[index+1];
