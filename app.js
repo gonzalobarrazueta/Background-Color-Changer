@@ -105,6 +105,7 @@ function convertGradients(values){
   for (let i = 0; i < values.length; i++){
     
     for (let j = 0; j < values[i].length; j++){
+      
       quotient = Number(values[i][j]);
 
       while(quotient !== 0){
@@ -113,7 +114,7 @@ function convertGradients(values){
         quotient = Math.floor(quotient/16);
 
         // cuando un valor rgb es de 1 cifra, se le agrega un 0 al final
-        if (values[i] < 10) { 
+        if (values[i][j] < 16) { 
           remainders.push(0);
         }
       }
@@ -141,7 +142,7 @@ function convertSolidColors(values){
       quotient = Math.floor(quotient / 16);   
 
       // cuando un valor rgb es de 1 cifra, se le agrega un 0 al final
-      if (values[i] < 10) { 
+      if (values[i] < 16) { 
         remainders.push(0);
       }
     }
@@ -218,11 +219,18 @@ function orderHexCode(){
 function showHexCode(){
 
   let para = document.querySelector('#hexCode');
-
+  let code = orderHexCode();
+  
   if(solidBtnSelected){
-    let code = orderHexCode().join('');
+  
+    code = code.join('');
     para.innerHTML = '#' + code;
   } else {
 
+    //code.splice(0,6) returns an array of the deleted elements (the first 6 values) and modifies the original array
+    let firstColor = code.splice(0,6).join('');
+    let secondColor = code.join(''); //array modified
+    
+    para.textContent = 'FROM #' + firstColor + '\tTO\t#'+ secondColor;
   }
 }
